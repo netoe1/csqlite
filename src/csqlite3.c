@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "csqlite3.h"
-
+#include "consts.h"
+// Internal functions.
 static int callback(void *NotUsed, int argc, char **argv, char **azColName)
 {
     int i;
@@ -12,7 +13,26 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName)
     printf("\n");
     return 0;
 }
+static int CSQLITE3_verifyConn(CSQLITE3 *ptr)
+{
+    if (ptr == NULL)
+    {
+        CSQLITE3_error("The pointer to connection is invalid.");
+    }
+}
+static void CSQLITE3_error(const char *what)
+{
 
+    if (what == NULL || *what == '\0')
+    {
+        fprintf(stderr, "The reason for error (what) is mandatory in CSQLITE3_error()!");
+        exit(CSQLITE_ERROR_EXIT);
+        return;
+    }
+
+    fprintf(stderr, "[%s]:%s\n", PREFIX_CSQLITE_ERR, what);
+    exit(CSQLITE_ERROR_EXIT);
+}
 int CSQLITE3_initConnection(const char path[], CSQLITE3 *ptr)
 {
     if (&path[0] == NULL || path[0] == '\0')
@@ -63,4 +83,8 @@ bool CSQLITE3_endConnection(CSQLITE3 *ptr)
         sqlite3_close(ptr->connection);
     }
     return true;
+}
+
+int CSQLITE3_rawQuery(CSQLITE3 *ptr, const char *query)
+{
 }
