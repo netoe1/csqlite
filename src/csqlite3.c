@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "csqlite3.h"
 #include "consts.h"
+#include "Table.h"
 // Internal functions.
 static int callback(void *NotUsed, int argc, char **argv, char **azColName)
 {
@@ -12,13 +13,6 @@ static int callback(void *NotUsed, int argc, char **argv, char **azColName)
     }
     printf("\n");
     return 0;
-}
-static int CSQLITE3_verifyConn(CSQLITE3 *ptr)
-{
-    if (ptr == NULL)
-    {
-        CSQLITE3_error("The pointer to connection is invalid.");
-    }
 }
 static void CSQLITE3_error(const char *what)
 {
@@ -32,6 +26,22 @@ static void CSQLITE3_error(const char *what)
 
     fprintf(stderr, "[%s]:%s\n", PREFIX_CSQLITE_ERR, what);
     exit(CSQLITE_ERROR_EXIT);
+}
+static int CSQLITE3_verifyConn(CSQLITE3 *ptr)
+{
+    if (ptr == NULL)
+    {
+        CSQLITE3_error("The CSQLITE ptr is invalid.");
+        return EXIT_FAILURE;
+    }
+
+    if (ptr->connection == NULL)
+    {
+        CSQLITE3_error("The CSQLITE ptr connectio  is invalid.");
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_FAILURE;
 }
 int CSQLITE3_initConnection(const char path[], CSQLITE3 *ptr)
 {
@@ -64,7 +74,6 @@ int CSQLITE3_initConnection(const char path[], CSQLITE3 *ptr)
     // }
     return EXIT_SUCCESS;
 }
-
 bool CSQLITE3_endConnection(CSQLITE3 *ptr)
 {
     if (ptr == NULL)
@@ -84,7 +93,6 @@ bool CSQLITE3_endConnection(CSQLITE3 *ptr)
     }
     return true;
 }
-
-int CSQLITE3_rawQuery(CSQLITE3 *ptr, const char *query)
-{
-}
+int CSQLITE3_createTable(CSQLITE3 *conn, CSQLITE3_Table *newTable);
+int CSQLITE3_deleteTable(CSQLITE3 *conn, CSQLITE3_Table *deleteTable);
+int CSQLITE3_updateTable(CSQLITE3 *conn, CSQLITE3_Table *updateTable);

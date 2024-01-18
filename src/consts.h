@@ -7,4 +7,5 @@
 #define PREFIX_CSQLITE_WARN "[csqlite-warning]:"
 #define CSQLITE_ERROR_EXIT -1
 #define CSQLITE_SUCCESS_EXIT 0
+
 #endif
