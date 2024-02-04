@@ -3,20 +3,20 @@
 
 typedef struct column
 {
-    char *variable_name;
-    char *type;
+    const char *variable_name;
+    const char *sqlite_type;
 } CSQLITE3_Column;
 
 typedef struct table
 {
-    char *table_name;
+    const char *table_name;
     CSQLITE3_Column *columns;
-    char *onDelete;
+    const char *onDelete;
 } CSQLITE3_Table;
 
 typedef struct buffer
 {
-    int inited;
+    unsigned int inited;
     CSQLITE3_Table __table;
 } CSQLITE3_Buffer;
 

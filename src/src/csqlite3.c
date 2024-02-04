@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "csqlite3.h"
-#include "consts.h"
-#include "Table.h"
+#include "../include/csqlite3.h"
+#include "../include/consts.h"
+#include "../include/Table.h"
 // Internal functions.
 static int callback(void *NotUsed, int argc, char **argv, char **azColName)
 {

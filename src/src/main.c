@@ -1,4 +1,5 @@
-#include "csqlite3.h"
+#include "../include/csqlite3.h"
+
 #include <stdio.h>
 int main(void)
 {
